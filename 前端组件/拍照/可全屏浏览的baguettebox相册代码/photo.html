@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<style type="text/css">
+			*{
+			   margin:0;
+			   padding:0;
+			   font-size: 14px;
+			   list-style: none;
+			   box-sizing:inherit;
+			   -webkit-box-sizing: inherit;
+			}
+			body{
+			   background-color: #e8f0d8
+			}
+			a{
+				text-decoration: none;
+			}
+			a:hover{
+				text-decoration: none;
+			}
+			.page-album{
+				padding: 0px 57px;
+			}
+			.mod-photo-tool{
+				margin: 30px 0;
+				overflow: auto;
+			}
+			.album-list-wrap{
+				padding-bottom: 80px;
+			}
+			.js-album-list-ul{
+				overflow: auto;
+			}
+			.js-album-list-ul li{
+				padding: 6px;
+				float: left;
+				background-color: #fff;
+				box-shadow: 0 1px 4px rgba(0,0,0,.15);
+				margin-right: 20px;
+				margin-bottom: 20px;
+			}
+			.j-uploadentry-photo{
+				float: left;
+			    height: 23px;
+			    font-size: 16px;
+			    padding: 5px 20px;
+			    border-radius: 2px;
+			    background-color: #4fb4bf;
+			    color: #fff;
+                border: 1px solid #4fb4bf;;
+                margin-right: 20px;
+			}
+			.js-oper-createAlbum{
+				float: left;
+				height: 33px;
+				line-height: 33px;
+				padding: 0 10px;
+				font-size: 14px;
+				border-radius: 2px;
+				color: #31332e;
+				border:1px solid #dae6c3;
+				background-color: #f8ffeb;
+			}
+			.js-cover-img{
+				width: 146px;
+                height:154.09px;
+			}
+			.album-desc{
+				height: 33px;
+				line-height: 33px;
+				color: #31332e;
+			}
+			.glyphicon.glyphicon-trash{
+				float: right;
+				line-height: 33px;
+			}			
+		</style>
+	</head>
+	<body>
+		<div class="page-album">
+			<div class="mod-photo-tool">
+				<a href="javascript:;" class="j-uploadentry-photo" id="j-uploadentry-photo" >上传照片</a>
+				<a href="javascript:;" class="j-uploadentry-photo" id="j-take-photo">拍照</a>
+				<!--<a href="javascript:;" class="js-oper-createAlbum" id="js-oper-createAlbum">创建相册</a>--> 
+			</div>
+			<div class="album-list-wrap">
+				<ul class="js-album-list-ul" id="js-album-list-ul">
+					<li>
+						<div class="js-album-item" >
+							<div class="js-album-item-imgBox">
+								<a class="js-album-cover" href="photoDetails.html">
+									<img class="js-cover-img" src="images/1-1.jpg"/>
+								</a>
+							</div>
+							<div class="album-desc">
+								<span>相册名称</span>
+								<span>数量</span>
+								<span class="glyphicon glyphicon-trash js_remove_photo" id="delete_1"></span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="js-album-item" >
+							<div class="js-album-item-imgBox">
+								<a class="js-album-cover" href="photoDetails.html">
+									<img class="js-cover-img" src="images/1-1.jpg"/>
+								</a>
+							</div>
+							<div class="album-desc">
+								<span>相册名称</span>
+								<span>数量</span>
+								<span class="glyphicon glyphicon-trash js_remove_photo" id="delete_2"></span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="js-album-item" >
+							<div class="js-album-item-imgBox">
+								<a class="js-album-cover" href="photoDetails.html">
+									<img class="js-cover-img" src="images/1-1.jpg"/>
+								</a>
+							</div>
+							<div class="album-desc">
+								<span>相册名称</span>
+								<span>数量</span>
+								<span class="glyphicon glyphicon-trash js_remove_photo" id="delete_3"></span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="js-album-item" >
+							<div class="js-album-item-imgBox">
+								<a class="js-album-cover" href="photoDetails.html">
+									<img class="js-cover-img" src="images/1-1.jpg"/>
+								</a>
+							</div>
+							<div class="album-desc">
+								<span>相册名称</span>
+								<span>数量</span>
+								<span class="glyphicon glyphicon-trash js_remove_photo" id="delete_4"></span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				query();
+				/*$("#js-oper-createAlbum").bind("click",function(){
+				  layer.open({
+				    	    type: 2,
+				    	    title: '创建相册',	 
+				    	    shadeClose: false,
+				    	    shade: 0.8,
+				    	    id:'layer_addParam',
+				    		area: ['55%', '55%'],
+				    		fixed: false, //不固定
+				    		maxmin: true,
+				    		scrollbar: false,
+				    		btn: ['保存', '取消'],
+				    	    yes: function(index, layero){
+				    	       document.getElementById("layui-layer-iframe"+index).contentWindow.saveForm();
+				    	    },  
+				    	    btn2: function(index, layero){
+				    	    	layer.closeAll();
+				    		    return false;
+				    	    },
+				    	    content: 'creatPhoto.html'
+				    });
+				});*/
+				$('#j-uploadentry-photo').bind("click",function(){
+					layer.open({
+				    	    type: 2,
+				    	    title: '上传照片(普通上传)',	 
+				    	    shadeClose: false,
+				    	    shade: 0.8,
+				    	    id:'layer_addParam',
+				    		area: ['80%', '80%'],
+				    		fixed: false, //不固定
+				    		maxmin: true,
+				    		closeBtn :1,
+				    		scrollbar: false,
+				    	    content: 'webuploader/index.html'
+				    });
+				})
+				$('#j-take-photo').bind("click",function(){
+					layer.open({
+				    	    type: 2,
+				    	    title: '拍照',	 
+				    	    shadeClose: false,
+				    	    shade: 0.8,
+				    	    id:'layer_addParam',
+				    		area: ['80%', '80%'],
+				    		fixed: false, //不固定
+				    		maxmin: true,
+				    		closeBtn :1,
+				    		scrollbar: false,
+				    	    content: 'takephotos.html'
+				    });
+				})
+				$('.js_remove_photo').bind("click",function(){
+					var id = this.id;
+					var li_this = $(id).parent().parent();
+					layer.confirm('确定要清空相册？', {
+						  btn: ['确定','取消'] //按钮
+						}, function(){
+						  $.ajax({
+				             type: "post",
+				             url: "test.json",
+				             data: 'this.id',
+				             dataType: "json",
+				             success: function(data){
+				             	li_this.empty();
+				             }
+		            });
+						}, function(){
+						  layer.closeAll();
+				          return false;
+						});
+				})
+		        function query() {
+		        	$.ajax({
+		             type: "GET",
+		             url: "test.json",
+		             data: '',
+		             dataType: "json",
+		             success: function(data){
+		                         $('#js-album-list-ul').html('');  
+		                         var contents = ''; 
+		                         $.each(data, function(commentIndex, comment){
+		                             contents += '<li>'
+						             contents += '<div class="js-album-item" >'
+							         contents += '<div class="js-album-item-imgBox">'
+							         contents += '<a class="js-album-cover" href="photoDetails.html">'
+									 contents += '<img class="js-cover-img" src="images/1-1.jpg"/>'
+								     contents += '</a>'
+							         contents += '</div>'
+							         contents += '<div class="album-desc">'
+								     contents += '<span>相册名称</span>'
+								     contents += '<span>数量</span>'
+								     contents += '<span class="glyphicon glyphicon-trash js_remove_photo"></span>'
+							         contents += '</div>'
+						             contents += '</div>'
+					                 contents += '</li>' 
+		                         });
+		                         $('#js-album-list-ul').html(contents);                        
+		                      }
+		            });
+		        }
+			})
+		</script>
+	</body>
+</html>

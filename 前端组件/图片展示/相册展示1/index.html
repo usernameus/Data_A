@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title> 原生js代码制作弹性图片相册分页展示 </title>
+
+<link href="css/back.css" type="text/css" rel="stylesheet" />
+
+</head>		
+<body>
+
+<div id="box">
+	<div class="list"><img src='img/imsc/1.jpg'/></div>
+	<div class="list"><img src='img/imsc/2.jpg'/></div>
+	<div class="list"><img src='img/imsc/3.jpg'/></div>
+	<div class="list"><img src='img/imsc/4.jpg'/></div>
+	<div class="list"><img src='img/imsc/5.jpg'/></div>
+	<div class="list"><img src='img/imsc/6.jpg'/></div>
+	<div class="list"><img src='img/imsc/7.jpg'/></div>
+	<div class="list"><img src='img/imsc/8.jpg'/></div>
+	<div class="list"><img src='img/imsc/9.jpg'/></div>
+	<div class="list"><img src='img/imsc/10.jpg'/></div>
+	<div class="list"><img src='img/imsc/11.jpg'/></div>
+	<div class="list"><img src='img/imsc/12.jpg'/></div>
+</div> 
+   
+<div id="page">
+	<a href="javascript:void(0);" class="active">1</a>
+	<a href="javascript:void(0);">2</a>
+	<a href="javascript:void(0);">3</a>
+</div>
+
+<script type="text/javascript" src="js/move.js"></script>    
+<script type="text/javascript">
+window.onload = function(){
+	var Box = document.getElementById('box');
+	var list_l = myclass('list',Box);
+	var aLi = document.getElementById('page').getElementsByTagName('a');
+	var alist = [];
+	var olist = true;
+	for(var i=0; i<list_l.length; i++){
+		var Oleft = list_l[i].offsetLeft;
+		var Otop = list_l[i].offsetTop;
+		alist[i] = {left:Oleft,top:Otop}
+	}
+	for(var i=0; i<list_l.length; i++){
+		list_l[i].style.left = alist[i].left+"px";
+		list_l[i].style.top = alist[i].top+"px";
+		list_l[i].style.position = "absolute";
+		list_l[i].style.margin =0+"px";
+		list_l[i].style.opacity =1;
+	}
+	for(var i=0; i<aLi.length; i++){
+		aLi[i].index = i;
+		aLi[i].onclick = function(){
+			if(olist===false){
+				return;
+			}
+			olist = false;
+			list_l = myclass('list',Box);
+			for(var n=0; n<aLi.length; n++){
+				aLi[n].className="";
+			}
+			this.className="active";
+			var Dates = sst(this.index);
+			var n=list_l.length-1;
+			var cont = 0;
+			var t=setInterval(function(){
+				buffer(list_l[n],{
+					top:150,
+					left:150,
+					width:50,
+					height:30,
+					opacity:0
+				},2,function(){
+					Box.removeChild(this);
+					cont++;
+					if(cont==list_l.length){
+						juest(Dates)
+					}
+					if(n<0){
+						clearInterval(t);
+					}
+				})
+				n--;
+			},100)
+			function juest(Dates){
+				var i=0;
+				var t=setInterval(function(){
+					if(i==Dates.length-1){
+						clearInterval(t);
+						olist=true;
+					}
+					var Odiv = document.createElement('div');
+					var Oimg = document.createElement('img');
+					Odiv.className="list";
+					Oimg.src = Dates[i];
+					Box.appendChild(Odiv);
+					Odiv.appendChild(Oimg);
+					Odiv.style.top= 150 +'px';
+					Odiv.style.left=150+'px';
+					Odiv.style.width = 50+'px';
+					Odiv.style.height=30+'px';
+					Odiv.style.position ='absolute';
+					Odiv.style.margin=0+'px';
+					fiexible(Odiv,{
+						left:alist[i].left,
+						top:alist[i].top,
+						width:100,
+						height:60
+					},3)
+					i++;
+					},100)
+			}
+			function sst(nums){
+				var Mus = nums*12;
+				var end = Mus+12;
+				var rest = [];
+				for(var i=Mus+1; i<=end; i++){
+					rest.push('img/imsc/'+i+'.jpg')
+				}
+				return rest;
+			}
+		}
+		
+	}
+	
+}
+function myclass(names,docu){
+	var obj = docu.getElementsByTagName('*');
+	var arr = [];
+	for(var i=0; i<obj.length; i++){
+		if(obj[i].className == names){
+			arr.push(obj[i]);
+			}
+		} 
+		return arr;
+	}
+</script>
+
+</body>
+</html>
