@@ -1,0 +1,25 @@
+    git更新远程仓库代码到本地
+
+　　1 使用命令查看连接的远程的仓库
+
+　　　　git remote -v
+
+　　2 远程获取代码
+
+　　　　git fetch origin master
+
+　　如果出现 Already up-to-date 说明代码更新好了
+
+　　出现 FETCH_HEAD
+
+　　使用命令 git merge FETCH_HEAD
+
+　　3 当然 我们也可以git fetch origin master:temp建立新分支temp，将代码合并到新分支temp上，在删除新分支temp
+    
+    git更新远程仓库代码到本地  
+  
+    1 git add .        （注：别忘记后面的.，此操作是把Test文件夹下面的文件都添加进来）
+
+    2 git commit  -m  ”提交信息”  （注：“提交信息”里面换成你需要，如“first commit”）
+
+    3 git push -u origin master   （注：此操作目的是把本地仓库push到github上面，此步骤需要你输入帐号和密码）
